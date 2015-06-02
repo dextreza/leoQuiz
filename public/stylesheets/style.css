@@ -29,3 +29,12 @@ footer,header,nav,section{
 nav span{
 	margin: 0 10px 0 0;
 }
+img{
+	border: 1px solid gray;
+	box-shadow: 2px 2px 5px #999;
+	padding: 2px;
+}
+
+a{
+	padding: 20px;
+}
