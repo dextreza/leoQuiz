@@ -14,7 +14,6 @@ exports.load = function(req, res, next,quizId) {
 
 
 
-//get /quizes/:id
 exports.index = function(req, res) {
 	modelo.Quiz.findAll().then(function(quizes){
 		res.render('quizes/index', { quizes: quizes});
@@ -30,11 +29,11 @@ exports.show = function(req, res) {
 
 //get /quizes/:id/answer
 exports.answer = function(req, res) {
-	
+
 	if (req.query.respuesta === req.quiz.respuesta){
-		res.render('quizes/answer', { quiz:req.quiz,respuesta: 'Correcto'});
+		res.render('quizes/answer', { quiz: req.quiz,respuesta: 'Correcto'});
 	}else{
-		res.render('quizes/answer', { quiz:req.quiz,respuesta: 'incorrecto'});
+		res.render('quizes/answer', { quiz: req.quiz,respuesta: 'incorrecto'});
 	}
 
 };
