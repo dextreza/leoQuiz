@@ -13,11 +13,18 @@ exports.load = function(req, res, next,quizId) {
 };
 
 
-
 exports.index = function(req, res) {
-	modelo.Quiz.findAll().then(function(quizes){
-		res.render('quizes/index', { quizes: quizes});
-	}).catch(function(error){next(error)});
+	
+	if (req.query.search){
+		modelo.Quiz.findAll({where: ["pregunta like ?", '%' + req.query.search.split(' ').join('%') + '%']}).then(function(quizes){
+				res.render('quizes/index', { quizes: quizes});
+			}).catch(function(error){next(error)});
+	}else{
+		modelo.Quiz.findAll().then(function(quizes){
+				res.render('quizes/index', { quizes: quizes});
+			}).catch(function(error){next(error)});
+	}
+	
 };
 
 
