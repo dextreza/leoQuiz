@@ -24,23 +24,22 @@ exports.index = function(req, res) {
 				res.render('quizes/index', { quizes: quizes});
 			}).catch(function(error){next(error)});
 	}
-	
 };
 
 
 //get /quizes/:id
 exports.show = function(req, res) {
-	res.render('quizes/show', { quiz: req.quiz});//este req.quiz es el que precarga arriba el load
+	modelo.Quiz.findById(req.params.quizId).then(function(miQuiz){
+		res.render('quizes/show', { quiz: miQuiz});
+	});
 };
 
 
 //get /quizes/:id/answer
 exports.answer = function(req, res) {
-
 	if (req.query.respuesta === req.quiz.respuesta){
 		res.render('quizes/answer', { quiz: req.quiz,respuesta: 'Correcto'});
 	}else{
 		res.render('quizes/answer', { quiz: req.quiz,respuesta: 'incorrecto'});
 	}
-
 };
