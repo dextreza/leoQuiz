@@ -7,6 +7,8 @@ router.get('/author', function(req, res) {
   res.render('author', { nombre: 'Leandro martinez fernandez' });
 });
 
+
+router.param('quizId',quizControler.load);//si el parametro 'quizId' existe en la ruta, entonces se ejecuta el quizController.load
 router.get('/quizes',		quizControler.index);
 router.get('/quizes/:quizId(\\d+)',quizControler.show);
 router.get('/quizes/quizId(\\d+)/answer',quizControler.answer);
