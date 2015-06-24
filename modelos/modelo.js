@@ -18,7 +18,9 @@ sequelize.sync().then(
 		Quiz.count().then(
 			function(count){//da el numero de filas de la tabla
 				if (count === 0){//la table se inicializa solo si esta vacia
-					Quiz.create({pregunta:'Capital de Italia',respuesta:'Roma'}).then(function(){console.log('BBDD inicializada');});
+					Quiz.create({pregunta:'Capital de Italia',respuesta:'Roma'});
+					Quiz.create({pregunta:'Capital de Portugal',respuesta:'Lisboa'});
+					Quiz.create({pregunta:'Capital de España',respuesta:'Madrid'}).then(function(){console.log('BBDD inicializada');});
 				}
 			}
 		);

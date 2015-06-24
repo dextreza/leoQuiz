@@ -7,8 +7,9 @@ router.get('/author', function(req, res) {
   res.render('author', { nombre: 'Leandro martinez fernandez' });
 });
 
-router.get('/quizes/question',quizControler.question);
-router.get('/quizes/answer',quizControler.answer);
+router.get('/quizes',		quizControler.index);
+router.get('/quizes/:quizId(\\d+)',quizControler.show);
+router.get('/quizes/quizId(\\d+)/answer',quizControler.answer);
 
 /* GET home page. */
 router.get('/', function(req, res) {
