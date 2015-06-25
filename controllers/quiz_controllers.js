@@ -17,11 +17,11 @@ exports.index = function(req, res) {
 	
 	if (req.query.search){
 		modelo.Quiz.findAll({where: ["pregunta like ?", '%' + req.query.search.split(' ').join('%') + '%']}).then(function(quizes){
-				res.render('quizes/index', { quizes: quizes});
+				res.render('quizes/index', { quizes: quizes,errors:[]});
 			}).catch(function(error){next(error)});
 	}else{
 		modelo.Quiz.findAll().then(function(quizes){
-				res.render('quizes/index', { quizes: quizes});
+				res.render('quizes/index', { quizes: quizes.sort(function(a,b){ return a.pregunta.toLowerCase().localeCompare(b.pregunta.toLowerCase()); }),errors:[]});
 			}).catch(function(error){next(error)});
 	}
 };
@@ -30,7 +30,7 @@ exports.index = function(req, res) {
 //get /quizes/:id
 exports.show = function(req, res) {
 	modelo.Quiz.findById(req.params.quizId).then(function(miQuiz){
-		res.render('quizes/show', { quiz: miQuiz});
+		res.render('quizes/show', { quiz: miQuiz,errors:[]});
 	});
 };
 
@@ -38,9 +38,9 @@ exports.show = function(req, res) {
 //get /quizes/:id/answer
 exports.answer = function(req, res) {
 	if (req.query.respuesta === req.quiz.respuesta){
-		res.render('quizes/answer', { quiz: req.quiz,respuesta: 'Correcto'});
+		res.render('quizes/answer', { quiz: req.quiz,respuesta: 'Correcto',errors:[]});
 	}else{
-		res.render('quizes/answer', { quiz: req.quiz,respuesta: 'incorrecto'});
+		res.render('quizes/answer', { quiz: req.quiz,respuesta: 'incorrecto',errors:[]});
 	}
 };
 
@@ -48,14 +48,23 @@ exports.answer = function(req, res) {
 //formulario de creacion de preguntas
 exports.new = function(req, res) {
 	var miQuiz = modelo.Quiz.build({pregunta:"Pregunta",respuesta:"Respuesta"});//crea unos valores genericos temporales.Solo se usa para pasar info
-	res.render('quizes/new', { quiz: miQuiz });
+	res.render('quizes/new', { quiz: miQuiz ,errors:[]});
 };
 
 
 //accion de creacion de la pregunta en BBDD
 exports.create = function(req, res) {
+
 	var miQuiz = modelo.Quiz.build(req.body.quiz);//build crea un objeto No persistente asociado a la tabla modelo.Quiz
-	miQuiz.save({fields:["pregunta","respuesta"]}).then(function (){//commit del objeto pero solo de los campos indicados.Evita sqlInyect
-		res.redirect('/quizes');//redireccion a lista de preguntas con la nueva ya metida
+	
+	miQuiz.validate().then(function(error){//validate es una funcion de secuelize
+
+		if(error){
+			res.render('quizes/new',{quiz:miQuiz,errors:error.errors});
+		}else{
+			miQuiz.save({fields:["pregunta","respuesta"]}).then(function (){//commit del objeto pero solo de los campos indicados.Evita sqlInyect
+				res.redirect('/quizes');//redireccion a lista de preguntas con la nueva ya metida
+			});
+		}
 	});
 };

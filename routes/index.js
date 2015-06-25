@@ -18,7 +18,7 @@ router.post('/quizes/create',				quizControler.create);//es POST, no GET!
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'LeoQuiz' });
+  res.render('index', { title: 'LeoQuiz',errors:[] });
 });
 
 module.exports = router;
