@@ -47,7 +47,7 @@ exports.answer = function(req, res) {
 
 //formulario de creacion de preguntas
 exports.new = function(req, res) {
-	var miQuiz = modelo.Quiz.build({pregunta:"Pregunta",respuesta:"Respuesta"});//crea unos valores genericos temporales.Solo se usa para pasar info
+	var miQuiz = modelo.Quiz.build({pregunta:"Pregunta",respuesta:"Respuesta",tema:"otro"});//crea unos valores genericos temporales.Solo se usa para pasar info
 	res.render('quizes/new', { quiz: miQuiz ,errors:[]});
 };
 
@@ -62,7 +62,7 @@ exports.create = function(req, res) {
 		if(error){
 			res.render('quizes/new',{quiz:miQuiz,errors:error.errors});
 		}else{
-			miQuiz.save({fields:["pregunta","respuesta"]}).then(function (){//commit del objeto pero solo de los campos indicados.Evita sqlInyect
+			miQuiz.save({fields:["pregunta","respuesta","tema"]}).then(function (){//commit del objeto pero solo de los campos indicados.Evita sqlInyect
 				res.redirect('/quizes');//redireccion a lista de preguntas con la nueva ya metida
 			});
 		}
@@ -79,15 +79,16 @@ exports.edit = function(req, res) {
 //accion de actualizacion de la pregunta en BBDD tras su edicion
 exports.update = function(req, res) {
 
-	req.quiz.pregunta = req.body.quiz.pregunta;
-	req.quiz.respuesta = req.body.quiz.respuesta;
+	req.quiz.pregunta 	= req.body.quiz.pregunta;
+	req.quiz.respuesta 	= req.body.quiz.respuesta;
+	req.quiz.tema 		= req.body.quiz.tema;
 	
 	req.quiz.validate().then(function(error){//validate es una funcion de secuelize
 
 		if(error){
 			res.render('quizes/edit',{quiz:req.quiz,errors:error.errors});
 		}else{
-			req.quiz.save({fields:["pregunta","respuesta"]}).then(function (){//commit del objeto pero solo de los campos indicados.Evita sqlInyect
+			req.quiz.save({fields:["pregunta","respuesta","tema"]}).then(function (){//commit del objeto pero solo de los campos indicados.Evita sqlInyect
 				res.redirect('/quizes');//redireccion a lista de preguntas con la nueva ya metida
 			});
 		}
