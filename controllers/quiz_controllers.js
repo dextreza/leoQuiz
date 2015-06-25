@@ -93,3 +93,10 @@ exports.update = function(req, res) {
 		}
 	});
 };
+
+//formulario de edicion de preguntas
+exports.destroy = function(req, res) {
+	req.quiz.destroy().then(function (){//destruye el objeto en BD
+		res.redirect('/quizes');//redireccion a lista de preguntas
+	}).catch(function(error){next(error)});
+};

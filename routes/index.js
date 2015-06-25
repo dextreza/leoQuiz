@@ -20,6 +20,8 @@ router.post('/quizes/create',				quizControler.create);//es POST, no GET!
 router.get('/quizes/:quizId(\\d+)/edit',	quizControler.edit);
 router.put('/quizes/:quizId(\\d+)',			quizControler.update);//es PUT, no GET!
 
+router.delete('/quizes/:quizId(\\d+)',		quizControler.destroy);//es delete , no GET!, gracias a methosdoverride y al parametro _method= delete en la query
+
 
 /* GET home page. */
 router.get('/', function(req, res) {

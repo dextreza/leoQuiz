@@ -9,6 +9,11 @@ for (i=0;i < quizes.length;i++){ %>
 		<td>
 			<a href = "/quizes/<%= quizes[i].id %>/edit" ><button type="button">Editar</button> </a>
 		</td>
+		<td>
+			<form method = 'post'  action = "quizes/<%= quizes[i].id %>?_method=delete" >
+				<button type="submit" onclick='return confirm("Borrar: <%= quizes[i].pregunta %>")' > Borrar </button>
+			</form>
+		</td>
 	</tr>
 
 	<p><a href = "/quizes"></a></p>
