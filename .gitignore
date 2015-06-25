@@ -1,6 +1,9 @@
 #paquetes node
 node_modules
 
+#paquetes node
+*.sqlite
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

@@ -68,3 +68,28 @@ exports.create = function(req, res) {
 		}
 	});
 };
+
+//formulario de edicion de preguntas
+exports.edit = function(req, res) {
+	var miQuiz = req.quiz;
+	res.render('quizes/edit', { quiz: miQuiz ,errors:[]});
+};
+
+
+//accion de actualizacion de la pregunta en BBDD tras su edicion
+exports.update = function(req, res) {
+
+	req.quiz.pregunta = req.body.quiz.pregunta;
+	req.quiz.respuesta = req.body.quiz.respuesta;
+	
+	req.quiz.validate().then(function(error){//validate es una funcion de secuelize
+
+		if(error){
+			res.render('quizes/edit',{quiz:req.quiz,errors:error.errors});
+		}else{
+			req.quiz.save({fields:["pregunta","respuesta"]}).then(function (){//commit del objeto pero solo de los campos indicados.Evita sqlInyect
+				res.redirect('/quizes');//redireccion a lista de preguntas con la nueva ya metida
+			});
+		}
+	});
+};
