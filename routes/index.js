@@ -4,7 +4,7 @@ var quizControler = require('../controllers/quiz_controllers.js');
 
 /* GET author page. */
 router.get('/author', function(req, res) {
-  res.render('author', { nombre: 'Leandro martinez fernandez' });
+  res.render('author', { nombre: 'Leandro martinez fernandez',errors:[] });
 });
 
 
