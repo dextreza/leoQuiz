@@ -17,7 +17,10 @@ app.use(partials());
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// se cambia esto para que cuando se le pase en la url un parametro del tipo quiz[respuesta] por ejemplo,
+// respete esta sintaxis de propiedad y cree en la url un  objeto llamado req.body.quiz con la propiedad respuesta
+//app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
