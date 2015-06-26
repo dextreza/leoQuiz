@@ -2,12 +2,18 @@ var express = require('express');
 var router = express.Router();
 var quizControler = require('../controllers/quiz_controllers.js');
 var commentControler = require('../controllers/comment_controllers.js');
+var sesionControler = require('../controllers/sesion_controller.js');
 
 
 /* GET author page. */
 router.get('/author', function(req, res) {
   res.render('author', { nombre: 'Leandro martinez fernandez',errors:[] });
 });
+
+
+router.get('/login',	sesionControler.new);
+router.post('/login',	sesionControler.create);
+router.get('/logout',	sesionControler.destroy);
 
 
 router.param('quizId',quizControler.load);//si el parametro 'quizId' existe en la ruta, entonces se ejecuta el quizController.load
