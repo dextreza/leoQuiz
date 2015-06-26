@@ -9,6 +9,7 @@ for (i=0;i < quizes.length;i++){ %>
 		<td>
 			[<%= quizes[i].tema %>]
 		</td>
+		<% if(session.usuario){%>
 		<td>
 			<a href = "/quizes/<%= quizes[i].id %>/edit" ><button type="button">Editar</button> </a>
 		</td>
@@ -17,6 +18,7 @@ for (i=0;i < quizes.length;i++){ %>
 				<button type="submit" onclick='return confirm("Borrar: <%= quizes[i].pregunta %>")' > Borrar </button>
 			</form>
 		</td>
+		<%}%>
 	</tr>
 
 	<p><a href = "/quizes"></a></p>
@@ -31,4 +33,4 @@ for (i=0;i < quizes.length;i++){ %>
 	<input type ="submit" value="Enviar">
 </form>
 
-<p><a href = "/quizes/new"><button type="button">Crear pregunta</button></a></p>
+<% if(session.usuario){%><p><a href = "/quizes/new"><button type="button">Crear pregunta</button></a></p><%}%>

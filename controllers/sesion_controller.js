@@ -30,3 +30,11 @@ exports.destroy = function(req,res){
 	delete req.session.usuario;
 	res.redirect(req.session.redireccion.toString());//redireccion a la pagina previa al login
 };
+
+exports.loginRequerido =  function(req,res,next){
+	if(req.session.usuario){
+		next();//paso al siguiente MW
+	}else{
+		res.redirect('/login');
+	}
+};

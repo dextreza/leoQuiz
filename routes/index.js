@@ -21,14 +21,14 @@ router.param('quizId',quizControler.load);//si el parametro 'quizId' existe en l
 router.get('/quizes',						quizControler.index);
 router.get('/quizes/:quizId(\\d+)',			quizControler.show);
 router.get('/quizes/:quizId(\\d+)/answer',	quizControler.answer);
-router.get('/quizes/new',					quizControler.new);
+router.get('/quizes/new',					sesionControler.loginRequerido ,quizControler.new);//asi tb se encadenan middleware, donde el primero da paso al segundo con next()
 
-router.post('/quizes/create',				quizControler.create);//es POST, no GET!
+router.post('/quizes/create',				sesionControler.loginRequerido ,quizControler.create);//es POST, no GET!
 
-router.get('/quizes/:quizId(\\d+)/edit',	quizControler.edit);
-router.put('/quizes/:quizId(\\d+)',			quizControler.update);//es PUT, no GET!
+router.get('/quizes/:quizId(\\d+)/edit',	sesionControler.loginRequerido ,quizControler.edit);
+router.put('/quizes/:quizId(\\d+)',			sesionControler.loginRequerido ,quizControler.update);//es PUT, no GET!
 
-router.delete('/quizes/:quizId(\\d+)',		quizControler.destroy);//es delete , no GET!, gracias a methosdoverride y al parametro _method= delete en la query
+router.delete('/quizes/:quizId(\\d+)',		sesionControler.loginRequerido ,quizControler.destroy);//es delete , no GET!, gracias a methosdoverride y al parametro _method= delete en la query
 
 
 router.get('/quizes/:quizId(\\d+)/comments/new',commentControler.new);
