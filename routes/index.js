@@ -17,6 +17,7 @@ router.get('/logout',	sesionControler.destroy);
 
 
 router.param('quizId',quizControler.load);//si el parametro 'quizId' existe en la ruta, entonces se ejecuta el quizController.load
+router.param('commentId',commentControler.load);
 
 router.get('/quizes',						quizControler.index);
 router.get('/quizes/:quizId(\\d+)',			quizControler.show);
@@ -33,6 +34,7 @@ router.delete('/quizes/:quizId(\\d+)',		sesionControler.loginRequerido ,quizCont
 
 router.get('/quizes/:quizId(\\d+)/comments/new',commentControler.new);
 router.post('/quizes/:quizId(\\d+)/comments',	commentControler.create);
+router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',sesionControler.loginRequerido ,commentControler.publish);
 
 /* GET home page. */
 router.get('/', function(req, res) {

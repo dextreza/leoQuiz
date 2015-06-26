@@ -1,5 +1,25 @@
 var modelo = require('../modelos/modelo.js');
 
+exports.load = function(req, res, next,commentId) {
+	modelo.Comment.find({
+							where:{id:Number(commentId)}
+					  	}).then(function(comentario){
+		if (comentario){
+			 req.comentario = comentario;
+			 next();//para que continue el flujo
+		}else{
+			next (new Error('No existe el comentario solicitado:' +  comentario));
+		}
+	}).catch(function(error){next(error)});
+};
+
+exports.publish = function(req,res){
+	req.comentario.publicado = true;
+	req.comentario.save({fields:["publicado"]}).then(function (){//commit del objeto pero solo de los campos indicados.Evita sqlInyect
+				res.redirect('/quizes/' + req.params.quizId);
+			}).catch(function(error){next(error);});
+};
+
 
 //GET '/quizes/:quizId(\\d+)/comments/new'
 exports.new = function(req, res) {
