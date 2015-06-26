@@ -7,13 +7,18 @@ var moduloSequelize = require('sequelize');
 var sequelize = new moduloSequelize(null,null,null,{dialect:"sqlite",storage:"quiz.sqlite"});
 
 //importar la definicion de la tabla tablaquiz en quiz.js
-var Quiz = sequelize.import(moduloPath.join(__dirname,'quiz'));//quiz.js
+var Quiz	= sequelize.import(moduloPath.join(__dirname,'mod_quiz'));//quiz.js
+var Comment = sequelize.import(moduloPath.join(__dirname,'mod_comentarios'));//comentarios.js
 
-exports.Quiz = Quiz;//exportar definicion de la tabla para que pueda ser exportada
+Comment.belongsTo(Quiz);//indica que los comentarios pertenecen a las quizes y crea una FK en la tabla comentarios
+Quiz.hasMany(Comment);//indica que una quiz puede tener mas de un comentario.tb tenemos belongsToMany y hasOne
+
+exports.Quiz	= Quiz;//exportar definicion de la tabla para que pueda ser exportada
+exports.Comment = Comment;//exportar definicion de la tabla para que pueda ser exportada
 
 sequelize.sync().then(
 
-	function(){//crea e inicilaiza la tabla de preguntas
+	function(){//crea e inicializa la tabla de preguntas
 
 		Quiz.count().then(
 			function(count){//da el numero de filas de la tabla

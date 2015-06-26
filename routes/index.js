@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var quizControler = require('../controllers/quiz_controllers.js');
+var commentControler = require('../controllers/comment_controllers.js');
+
 
 /* GET author page. */
 router.get('/author', function(req, res) {
@@ -22,6 +24,9 @@ router.put('/quizes/:quizId(\\d+)',			quizControler.update);//es PUT, no GET!
 
 router.delete('/quizes/:quizId(\\d+)',		quizControler.destroy);//es delete , no GET!, gracias a methosdoverride y al parametro _method= delete en la query
 
+
+router.get('/quizes/:quizId(\\d+)/comments/new',commentControler.new);
+router.post('/quizes/:quizId(\\d+)/comments',	commentControler.create);
 
 /* GET home page. */
 router.get('/', function(req, res) {

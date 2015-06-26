@@ -1,6 +1,6 @@
 module.exports = function(sequelize,DataTypes){
 
-	return sequelize.define('tablaquiz',
+	return sequelize.define('tabla_quizzes',//sequelize a veces cambia este nombre de la tabla.Cosa de plurales.
 							{
 								pregunta:{
 											type:DataTypes.STRING,

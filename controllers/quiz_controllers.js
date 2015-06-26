@@ -2,7 +2,10 @@ var modelo = require('../modelos/modelo.js');
 
 //autoload - busca el id que se pide en  bbdd y si esta lo pasa al req.EOC error
 exports.load = function(req, res, next,quizId) {
-	modelo.Quiz.findById(quizId).then(function(miQuiz){
+	modelo.Quiz.find({
+						where:{id:Number(quizId)},
+					  	include:[{model:modelo.Comment}]
+					  }).then(function(miQuiz){
 		if (miQuiz){
 			 req.quiz = miQuiz;
 			 next();//para que continue el flujo
@@ -10,6 +13,11 @@ exports.load = function(req, res, next,quizId) {
 			next (new Error('No existe la pregunta solicitada:' +  quizId));
 		}
 	}).catch(function(error){next(error)});
+};
+
+//get /quizes/:id
+exports.show = function(req, res) {
+	res.render('quizes/show', { quiz: req.quiz,errors:[]});
 };
 
 
@@ -25,15 +33,6 @@ exports.index = function(req, res) {
 			}).catch(function(error){next(error)});
 	}
 };
-
-
-//get /quizes/:id
-exports.show = function(req, res) {
-	modelo.Quiz.findById(req.params.quizId).then(function(miQuiz){
-		res.render('quizes/show', { quiz: miQuiz,errors:[]});
-	});
-};
-
 
 //get /quizes/:id/answer
 exports.answer = function(req, res) {

@@ -7,7 +7,7 @@ for (i=0;i < quizes.length;i++){ %>
 			<a href = "/quizes/<%= quizes[i].id %>" > <%= quizes[i].pregunta %> </a>
 		</td>
 		<td>
-			<a href = "/quizes/<%= quizes[i].id %>" > Tema: <%= quizes[i].tema %> </a>
+			[<%= quizes[i].tema %>]
 		</td>
 		<td>
 			<a href = "/quizes/<%= quizes[i].id %>/edit" ><button type="button">Editar</button> </a>
