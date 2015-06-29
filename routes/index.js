@@ -5,6 +5,26 @@ var commentControler = require('../controllers/comment_controllers.js');
 var sesionControler = require('../controllers/sesion_controller.js');
 
 
+//timeout de sesion
+router.get('*', function(req, res,next) {
+	
+	if(!req.path.match(/\/login/)){
+			
+		var accesoActual = new Date().getTime();
+		
+		var timeOut = 5000;//milisegundos-> 2 min
+
+		if ( (accesoActual - req.session.ultimoAcceso) < timeOut){
+			req.session.ultimoAcceso = accesoActual;
+		}else{
+			req.session.redireccion = req.path;
+			delete req.session.usuario;
+		}
+	}
+	next();
+});
+
+
 /* GET author page. */
 router.get('/author', function(req, res) {
   res.render('author', { nombre: 'Leandro martinez fernandez',errors:[] });
@@ -31,9 +51,8 @@ router.put('/quizes/:quizId(\\d+)',			sesionControler.loginRequerido ,quizContro
 
 router.delete('/quizes/:quizId(\\d+)',		sesionControler.loginRequerido ,quizControler.destroy);//es delete , no GET!, gracias a methosdoverride y al parametro _method= delete en la query
 
-
-router.get('/quizes/:quizId(\\d+)/comments/new',commentControler.new);
-router.post('/quizes/:quizId(\\d+)/comments',	commentControler.create);
+router.get('/quizes/:quizId(\\d+)/comments/new',sesionControler.loginRequerido ,commentControler.new);
+router.post('/quizes/:quizId(\\d+)/comments',	sesionControler.loginRequerido ,commentControler.create);
 router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',sesionControler.loginRequerido ,commentControler.publish);
 
 /* GET home page. */

@@ -1,11 +1,12 @@
 //get login
 exports.new = function(req, res) {
 	var errors = req.session.errors || {};
-	req.session.errors = {}
+	req.session.errors = {};
 	res.render('sesiones/new', { errors:errors});
 };
 
 //post login
+
 exports.create = function(req,res){
 
 	var miLogin = req.body.nombre;
@@ -21,6 +22,8 @@ exports.create = function(req,res){
 			
 		}else{
 			req.session.usuario = {id:miUsuario.id,nombre:miUsuario.nombre};
+			var accesoActual = new Date().getTime();
+			req.session.ultimoAcceso = accesoActual;		
 			res.redirect(req.session.redireccion.toString());//redireccion a la pagina previa al login	
 		}
 	});

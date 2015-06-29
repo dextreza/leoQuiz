@@ -11,7 +11,12 @@ var Quiz	= sequelize.import(moduloPath.join(__dirname,'mod_quiz'));//quiz.js
 var Comment = sequelize.import(moduloPath.join(__dirname,'mod_comentarios'));//comentarios.js
 
 Comment.belongsTo(Quiz);//indica que los comentarios pertenecen a las quizes y crea una FK en la tabla comentarios
-Quiz.hasMany(Comment);//indica que una quiz puede tener mas de un comentario.tb tenemos belongsToMany y hasOne
+Quiz.hasMany(Comment,{//indica que una quiz puede tener mas de un comentario.tb tenemos belongsToMany y hasOne
+'constraints': true,//para el borrado en cascada
+'onUpdate': 'cascade',
+'onDelete': 'cascade',
+'hooks': true
+});
 
 exports.Quiz	= Quiz;//exportar definicion de la tabla para que pueda ser exportada
 exports.Comment = Comment;//exportar definicion de la tabla para que pueda ser exportada
