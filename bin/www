@@ -12,14 +12,15 @@ var server = app.listen(app.get('port'), function() {
 
 /////////////////////////////////////////////////////////////
 //servidor seguro https con certificado digital propio
+var modFs 		= require("fs");
+var modHttps 	= require("https");
 
 var opciones = {
 	key:  modFs.readFileSync('certs/quiz-2015-key.pem').toString(),
 	cert: modFs.readFileSync('certs/quiz-2015-cert.pem').toString()
 };
 
-var modFs 		= require("fs");
-var modHttps 	= require("https");
+
 var servidorSeguro = modHttps.createServer(opciones,app);
 
 servidorSeguro.listen(8443,function(){

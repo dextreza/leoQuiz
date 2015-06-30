@@ -46,12 +46,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //aqui se guarda la ruta de origen de la peticion de login/logout para devolver al usuario al sitio correcto despues de dicha accion
 app.use(function( req, res, next) {
+
    if(!req.path.match(/\/login|\/logout/)){
         req.session.redireccion = req.path;
    }
 
    res.locals.session = req.session;//para hacer visible req.session en las vistas
    next();//pasa el control al siguienteMW. No consume la solicitud HTTP
+});
 
 app.use('/', routes);
 
