@@ -12,7 +12,7 @@ router.get('*', function(req, res,next) {
 			
 		var accesoActual = new Date().getTime();
 		
-		var timeOut = 5000;//milisegundos-> 2 min
+		var timeOut = 120000;//milisegundos-> 2 min
 
 		if ( (accesoActual - req.session.ultimoAcceso) < timeOut){
 			req.session.ultimoAcceso = accesoActual;
@@ -24,6 +24,27 @@ router.get('*', function(req, res,next) {
 	next();
 });
 
+
+/*otra opcion para el timeout de carloz azaustre
+var moment = require('moment');
++app.use(function (req, res, next) {
++
++  if (req.session.user) {
++    if (req.session.user.time) {
++      var timeDiff = moment().diff(req.session.user.time, 'minutes');
++      if (timeDiff >= 2) {
++        delete req.session.user;
++        res.redirect(req.session.redir.toString());
++        return;
++      }
++    } else {
++      req.session.user.time = moment().format();
++    }
++  }
++
++  next();
++});
+*/
 
 /* GET author page. */
 router.get('/author', function(req, res) {
