@@ -6,7 +6,7 @@ var sesionControler = require('../controllers/sesion_controller.js');
 
 
 //timeout de sesion
-router.get('*', function(req, res,next) {
+router.get(function(req, res,next) {//este MW entra al trapo con todas las peticiones http
 	
 	if(!req.path.match(/\/login/)){
 			

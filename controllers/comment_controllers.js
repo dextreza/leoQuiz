@@ -1,5 +1,6 @@
-var modelo = require('../modelos/modelo.js');
+var modelo = require('../modelos/modelo.js');//para tener acceso a las tablas de BBDD
 
+//este MW sirve para precargar en req.comentario el id del comentario de la url para operar con el despues
 exports.load = function(req, res, next,commentId) {
 	modelo.Comment.find({
 							where:{id:Number(commentId)}

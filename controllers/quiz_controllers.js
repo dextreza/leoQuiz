@@ -4,7 +4,7 @@ var modelo = require('../modelos/modelo.js');
 exports.load = function(req, res, next,quizId) {
 	modelo.Quiz.find({
 						where:{id:Number(quizId)},
-					  	include:[{model:modelo.Comment}]
+					  	include:[{model:modelo.Comment}]//esto sirve para ue tambien se traiga los comentarios asociados a la pregunta
 					  }).then(function(miQuiz){
 		if (miQuiz){
 			 req.quiz = miQuiz;

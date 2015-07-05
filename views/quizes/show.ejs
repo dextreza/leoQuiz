@@ -9,9 +9,9 @@
 <p<strong>Comentarios:</strong><p>
 <% for(index in quiz.tabla_comentarios) { %>
 	<% if(quiz.tabla_comentarios[index].publicado || session.usuario){%>
-	<p>-  <%= quiz.tabla_comentarios[index].texto %></p>
+	<p>-  <%= quiz.tabla_comentarios[index].texto %>
 		<% if( session.usuario && !quiz.tabla_comentarios[index].publicado){%>
-		<a href = "/quizes/<%= quiz.id %>/comments/<%=quiz.tabla_comentarios[index].id%>/publish" ><button> Publicar </button> </a>
+		<a href = "/quizes/<%= quiz.id %>/comments/<%=quiz.tabla_comentarios[index].id%>/publish" > <button> Publicar </button> </a>
 		<%}%>
 	</p>
 	<%}%>

@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-var debug 		= require('debug')('leoQuiz');
-var app 		= require('../app');
+var debug 		= require('debug')('leoQuiz');//para debuguear
+var app 		= require('../app');//para acceder a la aplicacion
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3000);//ponemos el puerto donde se servira la aplicacion
 
-var server = app.listen(app.get('port'), function() {
+var server = app.listen(app.get('port'), function() {//arrancamos el servidor con nuestra aplicacion
   debug('Express server listening on port ' + server.address().port);
   console.log('Express server listening on port ' + server.address().port);
   
